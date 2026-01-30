@@ -135,7 +135,7 @@ export function OutcomeSection({
         {initialData.reviewedOn && (
           <div className="pt-2 border-t border-slate-100">
             <span className="text-xs font-semibold text-slate-500 uppercase tracking-wide">Reviewed on </span>
-            <span className="text-sm text-slate-700 font-medium">
+            <span className="text-sm text-slate-700 font-medium" suppressHydrationWarning>
               {new Date(initialData.reviewedOn).toLocaleDateString()}
             </span>
           </div>
