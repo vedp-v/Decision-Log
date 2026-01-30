@@ -25,7 +25,7 @@ export function SearchBar({
           focus:outline-none focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500"
       />
       <svg
-        className="absolute left-3 top-3 h-4.5 w-4.5 text-slate-400"
+        className="absolute left-3 top-3 h-5 w-5 text-slate-400"
         fill="none"
         stroke="currentColor"
         viewBox="0 0 24 24"
