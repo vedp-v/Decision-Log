@@ -1,0 +1,136 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    /* Background colors */
+    --background: #f8fafc;
+    --background-card: #ffffff;
+    --background-muted: #f1f5f9;
+    
+    /* Text colors */
+    --foreground: #0f172a;
+    --foreground-muted: #64748b;
+    --foreground-subtle: #94a3b8;
+    
+    /* Brand colors */
+    --primary: #2563eb;
+    --primary-hover: #1d4ed8;
+    --primary-light: #dbeafe;
+    
+    /* Status colors */
+    --success: #059669;
+    --success-light: #d1fae5;
+    --warning: #d97706;
+    --warning-light: #fef3c7;
+    --error: #dc2626;
+    --error-light: #fee2e2;
+    
+    /* Border colors */
+    --border: #e2e8f0;
+    --border-hover: #cbd5e1;
+  }
+
+  html {
+    font-feature-settings: "cv02", "cv03", "cv04", "cv11";
+  }
+
+  body {
+    @apply bg-slate-50 text-slate-900;
+    font-family: var(--font-inter), system-ui, -apple-system, sans-serif;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+
+  /* Typography scale */
+  h1 {
+    @apply text-2xl font-semibold tracking-tight text-slate-900;
+  }
+
+  h2 {
+    @apply text-xl font-semibold tracking-tight text-slate-900;
+  }
+
+  h3 {
+    @apply text-lg font-medium text-slate-900;
+  }
+
+  h4 {
+    @apply text-base font-medium text-slate-800;
+  }
+
+  p {
+    @apply text-slate-600 leading-relaxed;
+  }
+
+  /* Better form defaults */
+  input, textarea, select {
+    @apply text-slate-900;
+  }
+
+  input::placeholder, textarea::placeholder {
+    @apply text-slate-400;
+  }
+}
+
+@layer components {
+  /* Card component */
+  .card {
+    @apply bg-white rounded-xl border border-slate-200 shadow-sm;
+  }
+
+  /* Badge variants */
+  .badge {
+    @apply inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium;
+  }
+
+  .badge-blue {
+    @apply bg-blue-50 text-blue-700 ring-1 ring-inset ring-blue-600/20;
+  }
+
+  .badge-green {
+    @apply bg-emerald-50 text-emerald-700 ring-1 ring-inset ring-emerald-600/20;
+  }
+
+  .badge-gray {
+    @apply bg-slate-100 text-slate-700 ring-1 ring-inset ring-slate-500/20;
+  }
+
+  .badge-amber {
+    @apply bg-amber-50 text-amber-700 ring-1 ring-inset ring-amber-600/20;
+  }
+
+  .badge-red {
+    @apply bg-red-50 text-red-700 ring-1 ring-inset ring-red-600/20;
+  }
+}
+
+@layer utilities {
+  .text-balance {
+    text-wrap: balance;
+  }
+}
+
+/* Custom scrollbar */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+  @apply bg-slate-300 rounded-full;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  @apply bg-slate-400;
+}
+
+/* Focus ring utility */
+*:focus-visible {
+  @apply outline-none ring-2 ring-blue-500 ring-offset-2;
+}

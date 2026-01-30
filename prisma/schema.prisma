@@ -1,0 +1,65 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+enum DecisionStatus {
+  Proposed
+  Decided
+  Reversed
+}
+
+enum OutcomeStatus {
+  Unknown
+  Success
+  Partial
+  Fail
+}
+
+model Decision {
+  id                    String         @id @default(uuid())
+  title                 String
+  date                  DateTime       @default(now())
+  status                DecisionStatus @default(Proposed)
+  context               String?        @db.Text
+  optionsConsidered     String?        @db.Text
+  decision              String?        @db.Text
+  expectedImpact        String?        @db.Text
+  confidence            Int            @default(60)
+  reversible            Boolean        @default(true)
+  reviewDate            DateTime?
+  links                 Json?
+  tags                  String[]
+  outcomeStatus         OutcomeStatus  @default(Unknown)
+  actualImpact          String?        @db.Text
+  learnings             String?        @db.Text
+  whatIdDoDifferently   String?        @db.Text
+  reviewedOn            DateTime?
+  createdAt             DateTime       @default(now())
+  updatedAt             DateTime       @updatedAt
+  deletedAt             DateTime?
+  notes                 DecisionNote[]
+
+  @@index([status])
+  @@index([reviewDate])
+  @@index([deletedAt])
+}
+
+model DecisionNote {
+  id         String    @id @default(uuid())
+  decisionId String
+  content    String    @db.Text
+  createdAt  DateTime  @default(now())
+  deletedAt  DateTime?
+  decision   Decision  @relation(fields: [decisionId], references: [id], onDelete: Cascade)
+
+  @@index([decisionId])
+  @@index([deletedAt])
+}

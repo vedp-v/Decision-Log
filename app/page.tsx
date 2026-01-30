@@ -1,0 +1,209 @@
+'use client';
+
+import React, { useState, useEffect } from 'react';
+import Link from 'next/link';
+import { Button } from '@/components/ui/Button';
+import { SearchBar } from '@/components/decisions/SearchBar';
+import { Filters } from '@/components/decisions/Filters';
+import { DecisionsTable } from '@/components/decisions/DecisionsTable';
+import { DecisionCards } from '@/components/decisions/DecisionCards';
+import { ReviewDueBanner } from '@/components/decisions/ReviewDueBanner';
+
+interface Decision {
+  id: string;
+  title: string;
+  status: 'Proposed' | 'Decided' | 'Reversed';
+  date: Date;
+  confidence: number;
+  reversible: boolean;
+  reviewDate: Date | null;
+  tags: string[];
+  context?: string | null;
+  decision?: string | null;
+}
+
+export default function HomePage() {
+  const [decisions, setDecisions] = useState<Decision[]>([]);
+  const [reviewDueDecisions, setReviewDueDecisions] = useState<Decision[]>([]);
+  const [allTags, setAllTags] = useState<string[]>([]);
+  const [loading, setLoading] = useState(true);
+
+  // Filter states
+  const [search, setSearch] = useState('');
+  const [statusFilter, setStatusFilter] = useState('all');
+  const [tagFilter, setTagFilter] = useState('');
+  const [reviewDueFilter, setReviewDueFilter] = useState('all');
+
+  useEffect(() => {
+    fetchData();
+  }, []);
+
+  async function fetchData() {
+    try {
+      const [decisionsRes, tagsRes, reviewDueRes] = await Promise.all([
+        fetch('/api/decisions'),
+        fetch('/api/tags'),
+        fetch('/api/decisions/review-due'),
+      ]);
+
+      const decisionsData = await decisionsRes.json();
+      const tagsData = await tagsRes.json();
+      const reviewDueData = await reviewDueRes.json();
+
+      setDecisions(
+        decisionsData.map((d: any) => ({
+          ...d,
+          date: new Date(d.date),
+          reviewDate: d.reviewDate ? new Date(d.reviewDate) : null,
+        }))
+      );
+      setAllTags(tagsData);
+      setReviewDueDecisions(
+        reviewDueData.map((d: any) => ({
+          ...d,
+          reviewDate: d.reviewDate ? new Date(d.reviewDate) : null,
+        }))
+      );
+    } catch (error) {
+      console.error('Error fetching data:', error);
+    } finally {
+      setLoading(false);
+    }
+  }
+
+  async function handleExportCSV() {
+    try {
+      const response = await fetch('/api/decisions/export');
+      const blob = await response.blob();
+      const url = window.URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      a.href = url;
+      a.download = `decisions-${new Date().toISOString().split('T')[0]}.csv`;
+      document.body.appendChild(a);
+      a.click();
+      window.URL.revokeObjectURL(url);
+      document.body.removeChild(a);
+    } catch (error) {
+      console.error('Error exporting CSV:', error);
+    }
+  }
+
+  // Filter decisions
+  const filteredDecisions = decisions.filter((decision) => {
+    // Search filter
+    if (search) {
+      const searchLower = search.toLowerCase();
+      const matchesTitle = decision.title.toLowerCase().includes(searchLower);
+      const matchesContext = decision.context
+        ?.toLowerCase()
+        .includes(searchLower);
+      if (!matchesTitle && !matchesContext) return false;
+    }
+
+    // Status filter
+    if (statusFilter !== 'all' && decision.status !== statusFilter) {
+      return false;
+    }
+
+    // Tag filter
+    if (tagFilter && !decision.tags.includes(tagFilter)) {
+      return false;
+    }
+
+    // Review due filter
+    if (reviewDueFilter !== 'all' && decision.reviewDate) {
+      const days = parseInt(reviewDueFilter);
+      const today = new Date();
+      const reviewDate = new Date(decision.reviewDate);
+      const diffTime = reviewDate.getTime() - today.getTime();
+      const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
+      if (diffDays < 0 || diffDays > days) return false;
+    }
+
+    return true;
+  });
+
+  if (loading) {
+    return (
+      <div className="flex items-center justify-center h-64">
+        <div className="text-slate-400 text-sm">Loading decisions...</div>
+      </div>
+    );
+  }
+
+  return (
+    <div>
+      <ReviewDueBanner decisions={reviewDueDecisions} />
+
+      <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 mb-6">
+        <div>
+          <h2 className="text-xl font-semibold text-slate-900 tracking-tight">Decisions</h2>
+          <p className="text-sm text-slate-500 mt-0.5">{filteredDecisions.length} total</p>
+        </div>
+        <div className="flex gap-2">
+          <Button variant="secondary" onClick={handleExportCSV}>
+            Export CSV
+          </Button>
+          <Link href="/decisions/new">
+            <Button>New Decision</Button>
+          </Link>
+        </div>
+      </div>
+
+      <div className="space-y-4 mb-6">
+        <SearchBar
+          value={search}
+          onChange={setSearch}
+          placeholder="Search by title or context..."
+        />
+        <Filters
+          status={statusFilter}
+          onStatusChange={setStatusFilter}
+          tag={tagFilter}
+          onTagChange={setTagFilter}
+          reviewDue={reviewDueFilter}
+          onReviewDueChange={setReviewDueFilter}
+          allTags={allTags}
+        />
+      </div>
+
+      {filteredDecisions.length === 0 ? (
+        <div className="bg-white rounded-xl border border-slate-200 shadow-sm p-12 text-center">
+          <div className="w-12 h-12 bg-slate-100 rounded-xl flex items-center justify-center mx-auto mb-4">
+            <svg
+              className="h-6 w-6 text-slate-400"
+              fill="none"
+              stroke="currentColor"
+              viewBox="0 0 24 24"
+            >
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                strokeWidth={1.5}
+                d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"
+              />
+            </svg>
+          </div>
+          <h3 className="text-base font-semibold text-slate-900 mb-1">
+            {decisions.length === 0 ? 'No decisions yet' : 'No results found'}
+          </h3>
+          <p className="text-sm text-slate-500 mb-5">
+            {decisions.length === 0
+              ? 'Start tracking your decisions to see them here.'
+              : 'Try adjusting your filters or search terms.'}
+          </p>
+          {decisions.length === 0 && (
+            <Link href="/decisions/new">
+              <Button>Create Your First Decision</Button>
+            </Link>
+          )}
+        </div>
+      ) : (
+        <>
+          <DecisionsTable decisions={filteredDecisions} />
+          <DecisionCards decisions={filteredDecisions} />
+        </>
+      )}
+    </div>
+  );
+}
