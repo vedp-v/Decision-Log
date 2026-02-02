@@ -124,7 +124,7 @@ export function OutcomeSection({
         {initialData.whatIdDoDifferently && (
           <div>
             <h5 className="text-xs font-semibold text-slate-500 uppercase tracking-wide mb-1.5">
-              What I&apos;d Do Differently
+              What I would do differently
             </h5>
             <p className="text-slate-700 text-sm whitespace-pre-wrap leading-relaxed">
               {initialData.whatIdDoDifferently}
