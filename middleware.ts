@@ -1,11 +1,5 @@
-
-import { auth } from "@/auth"
-
-export default auth((req) => {
-    // custom logic if needed
-})
-
-// Optionally, don't invoke Middleware on some paths
+// Middleware disabled to avoid Edge runtime Prisma issues
+// Authentication is handled at the page level instead
 export const config = {
-    matcher: ["/((?!api|_next/static|_next/image|favicon.ico).*)"],
+    matcher: [],
 }

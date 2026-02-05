@@ -1,18 +1,17 @@
+import { ImageResponse } from 'next/og'
 
-import { ImageResponse } from 'next/og';
+export const runtime = 'edge'
 
-// Image metadata
 export const size = {
     width: 32,
     height: 32,
-};
-export const contentType = 'image/png';
+}
 
-// Image generation
+export const contentType = 'image/png'
+
 export default function Icon() {
     return new ImageResponse(
         (
-            // ImageResponse JSX element
             <div
                 style={{
                     fontSize: 20,
@@ -26,7 +25,6 @@ export default function Icon() {
                     borderRadius: '6px',
                 }}
             >
-                {/* Document Add Icon SVG representation */}
                 <svg
                     width="20"
                     height="20"
@@ -36,7 +34,6 @@ export default function Icon() {
                     strokeWidth="2"
                     strokeLinecap="round"
                     strokeLinejoin="round"
-                    style={{ color: '#ffffff' }}
                 >
                     <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z" />
                     <path d="M14 2v6h6" />
@@ -45,9 +42,8 @@ export default function Icon() {
                 </svg>
             </div>
         ),
-        // ImageResponse options
         {
             ...size,
         }
-    );
+    )
 }

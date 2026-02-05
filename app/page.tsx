@@ -46,26 +46,38 @@ export default function HomePage() {
         fetch('/api/decisions/review-due'),
       ]);
 
+      // Handle unauthorized responses (user not logged in)
+      if (decisionsRes.status === 401) {
+        setDecisions([]);
+        setAllTags([]);
+        setReviewDueDecisions([]);
+        setLoading(false);
+        return;
+      }
+
       const decisionsData = await decisionsRes.json();
       const tagsData = await tagsRes.json();
       const reviewDueData = await reviewDueRes.json();
 
       setDecisions(
-        decisionsData.map((d: any) => ({
+        Array.isArray(decisionsData) ? decisionsData.map((d: any) => ({
           ...d,
           date: new Date(d.date),
           reviewDate: d.reviewDate ? new Date(d.reviewDate) : null,
-        }))
+        })) : []
       );
-      setAllTags(tagsData);
+      setAllTags(Array.isArray(tagsData) ? tagsData : []);
       setReviewDueDecisions(
-        reviewDueData.map((d: any) => ({
+        Array.isArray(reviewDueData) ? reviewDueData.map((d: any) => ({
           ...d,
           reviewDate: d.reviewDate ? new Date(d.reviewDate) : null,
-        }))
+        })) : []
       );
     } catch (error) {
       console.error('Error fetching data:', error);
+      setDecisions([]);
+      setAllTags([]);
+      setReviewDueDecisions([]);
     } finally {
       setLoading(false);
     }
