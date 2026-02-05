@@ -1,17 +1,28 @@
 import React from 'react';
-import { notFound } from 'next/navigation';
+import { notFound, redirect } from 'next/navigation';
 import { DecisionForm } from '@/components/decisions/DecisionForm';
 import { getDecision } from '@/lib/actions';
+import { auth } from '@/auth';
 
 export default async function EditDecisionPage({
   params,
 }: {
   params: { id: string };
 }) {
+  const session = await auth();
+  if (!session?.user) {
+    redirect('/api/auth/signin');
+  }
+
   const decision = await getDecision(params.id);
 
   if (!decision) {
     notFound();
+  }
+
+  // Security Check: ensure user owns this decision
+  if (decision.userId && decision.userId !== session.user.id) {
+    return <div>Unauthorized</div>;
   }
 
   return (

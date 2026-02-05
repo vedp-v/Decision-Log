@@ -5,7 +5,7 @@ import { redirect } from 'next/navigation';
 import { prisma } from '@/lib/db';
 import { DecisionFormData, OutcomeFormData, Link } from '@/types/decision';
 
-export async function createDecision(data: DecisionFormData) {
+export async function createDecision(data: DecisionFormData, userId?: string) {
   try {
     const decision = await prisma.decision.create({
       data: {
@@ -21,6 +21,7 @@ export async function createDecision(data: DecisionFormData) {
         reviewDate: data.reviewDate || null,
         links: data.links ? (data.links as any) : null,
         tags: data.tags,
+        userId: userId || null,
       },
     });
 
@@ -118,7 +119,7 @@ export async function addNote(decisionId: string, content: string) {
 export async function getDecision(id: string) {
   try {
     const decision = await prisma.decision.findFirst({
-      where: { 
+      where: {
         id,
         deletedAt: null,  // Exclude soft-deleted records
       },
@@ -151,11 +152,15 @@ export async function getDecisions(filters?: {
   dateFrom?: Date;
   dateTo?: Date;
   reviewDue?: string;
-}) {
+}, userId?: string) {
   try {
     const where: any = {
-      deletedAt: null,  // Exclude soft-deleted records
+      deletedAt: null,
     };
+
+    if (userId) {
+      where.userId = userId;
+    }
 
     // Search filter (title and context)
     if (filters?.search) {
