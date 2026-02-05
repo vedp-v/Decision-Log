@@ -4,18 +4,18 @@ A personal web application for tracking important decisions with context, confid
 
 ## Features
 
-- 📝 Capture decisions with full context and metadata
-- 🎯 Track confidence levels and reversibility
-- 📊 Review outcomes and learnings
-- 🏷️ Organize with tags
-- 🔍 Search and filter decisions
-- 📱 Responsive design (mobile cards, desktop table)
-- ⚡ Quick-add mode for fast entry
-- 📤 Export to CSV
+- Capture decisions with full context and metadata
+- Track confidence levels and reversibility
+- Review outcomes and learnings
+- Organize with tags
+- Search and filter decisions
+- Responsive design (mobile cards, desktop table)
+- Quick-add mode for fast entry
+- Export to CSV
 
 ## Getting Started
 
-**📖 For detailed setup instructions, see [SETUP.md](./SETUP.md)**
+**For detailed setup instructions, see [SETUP.md](./SETUP.md)**
 
 ### Quick Start
 
