@@ -1,9 +1,14 @@
+'use client';
 
-import { signOut } from "@/auth"
 import { Button } from "@/components/ui/Button"
 import Image from "next/image"
 
 export function UserMenu({ user }: { user: any }) {
+    async function handleSignOut() {
+        await fetch('/api/auth/signout', { method: 'POST' });
+        window.location.href = '/';
+    }
+
     return (
         <div className="flex items-center gap-2">
             {user.image && (
@@ -15,20 +20,14 @@ export function UserMenu({ user }: { user: any }) {
                     className="rounded-full ring-2 ring-slate-200"
                 />
             )}
-            <form
-                action={async () => {
-                    "use server"
-                    await signOut()
-                }}
+            <Button
+                type="button"
+                variant="secondary"
+                size="sm"
+                onClick={handleSignOut}
             >
-                <Button
-                    type="submit"
-                    variant="secondary"
-                    size="sm"
-                >
-                    Sign Out
-                </Button>
-            </form>
+                Sign Out
+            </Button>
         </div>
     )
 }

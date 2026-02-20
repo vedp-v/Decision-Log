@@ -32,13 +32,9 @@
     --border-hover: #cbd5e1;
   }
 
-  html {
-    font-feature-settings: "cv02", "cv03", "cv04", "cv11";
-  }
-
   body {
     @apply bg-slate-50 text-slate-900;
-    font-family: var(--font-inter), system-ui, -apple-system, sans-serif;
+    font-family: 'Cambria', 'Georgia', 'Times New Roman', serif;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
   }
