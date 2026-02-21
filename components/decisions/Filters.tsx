@@ -2,7 +2,6 @@
 
 import React from 'react';
 import { Select } from '@/components/ui/Input';
-import { DecisionStatus } from '@/types/decision';
 
 interface FiltersProps {
   status: string;

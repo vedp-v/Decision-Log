@@ -10,19 +10,19 @@ export function UserMenu({ user }: { user: any }) {
     }
 
     return (
-        <div className="flex items-center gap-2">
+        <div className="flex items-center gap-3">
             {user.image && (
                 <Image
                     src={user.image}
                     alt={user.name || "User"}
-                    width={36}
-                    height={36}
-                    className="rounded-full ring-2 ring-slate-200"
+                    width={28}
+                    height={28}
+                    className="rounded-full ring-1 ring-border"
                 />
             )}
             <Button
                 type="button"
-                variant="secondary"
+                variant="ghost"
                 size="sm"
                 onClick={handleSignOut}
             >

@@ -1,5 +1,8 @@
-export function cn(...inputs: (string | undefined | null | boolean)[]) {
-  return inputs.filter(Boolean).join(' ');
+import { type ClassValue, clsx } from 'clsx';
+import { twMerge } from 'tailwind-merge';
+
+export function cn(...inputs: ClassValue[]) {
+  return twMerge(clsx(inputs));
 }
 
 export function formatDate(date: Date | string | null | undefined): string {
@@ -42,17 +45,13 @@ export function generateCSV(data: any[]): string {
   const headers = Object.keys(data[0]);
   const csvRows = [];
 
-  // Add headers
   csvRows.push(headers.join(','));
 
-  // Add data rows
   for (const row of data) {
     const values = headers.map((header) => {
       const value = row[header];
-      // Handle special characters and quotes in CSV
       if (value === null || value === undefined) return '';
       const stringValue = String(value);
-      // Escape quotes and wrap in quotes if contains comma, quote, or newline
       if (stringValue.includes(',') || stringValue.includes('"') || stringValue.includes('\n')) {
         return `"${stringValue.replace(/"/g, '""')}"`;
       }

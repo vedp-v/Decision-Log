@@ -64,8 +64,8 @@ export function QuickAddForm({ onExpand }: QuickAddFormProps) {
       />
 
       <div>
-        <label className="block text-sm font-medium text-gray-700 mb-2">
-          Confidence: {formData.confidence}%
+        <label className="block text-sm font-medium text-foreground mb-2">
+          Confidence: <span className="tabular-nums">{formData.confidence}%</span>
         </label>
         <input
           type="range"
@@ -75,24 +75,25 @@ export function QuickAddForm({ onExpand }: QuickAddFormProps) {
           onChange={(e) =>
             setFormData({ ...formData, confidence: parseInt(e.target.value) })
           }
-          className="w-full h-2 bg-gray-200 rounded-lg appearance-none cursor-pointer accent-blue-600"
+          className="w-full h-1.5 bg-muted rounded-full appearance-none cursor-pointer accent-foreground"
         />
-        <div className="flex justify-between text-xs text-gray-500 mt-1">
+        <div className="flex justify-between text-xs text-muted-foreground mt-1">
           <span>Low</span>
           <span>High</span>
         </div>
       </div>
 
       <div className="flex gap-3 pt-4">
-        <Button type="submit" disabled={loading || !formData.title.trim()}>
+        <Button type="submit" size="sm" disabled={loading || !formData.title.trim()}>
           {loading ? 'Saving...' : 'Save'}
         </Button>
-        <Button type="button" variant="secondary" onClick={onExpand}>
+        <Button type="button" variant="outline" size="sm" onClick={onExpand}>
           Expand to Full Form
         </Button>
         <Button
           type="button"
           variant="ghost"
+          size="sm"
           onClick={() => router.push('/')}
         >
           Cancel

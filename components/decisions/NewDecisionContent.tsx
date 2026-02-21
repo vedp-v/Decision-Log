@@ -11,15 +11,15 @@ export function NewDecisionContent() {
     return (
         <div>
             <div className="mb-6">
-                <h2 className="text-2xl font-bold text-gray-900">New Decision</h2>
-                <p className="text-gray-600 mt-1">
+                <h2 className="text-lg font-semibold tracking-tight">New Decision</h2>
+                <p className="text-sm text-muted-foreground mt-1">
                     {useFullForm
                         ? 'Fill in the details about your decision.'
                         : 'Quick add a decision with just the essentials.'}
                 </p>
             </div>
 
-            <div className="bg-white rounded-lg border border-gray-200 p-6">
+            <div className="rounded-lg border bg-card p-6">
                 {useFullForm ? (
                     <DecisionForm />
                 ) : (

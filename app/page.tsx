@@ -28,7 +28,6 @@ export default function HomePage() {
   const [allTags, setAllTags] = useState<string[]>([]);
   const [loading, setLoading] = useState(true);
 
-  // Filter states
   const [search, setSearch] = useState('');
   const [statusFilter, setStatusFilter] = useState('all');
   const [tagFilter, setTagFilter] = useState('');
@@ -46,7 +45,6 @@ export default function HomePage() {
         fetch('/api/decisions/review-due'),
       ]);
 
-      // Handle unauthorized responses (user not logged in)
       if (decisionsRes.status === 401) {
         setDecisions([]);
         setAllTags([]);
@@ -100,29 +98,22 @@ export default function HomePage() {
     }
   }
 
-  // Filter decisions
   const filteredDecisions = decisions.filter((decision) => {
-    // Search filter
     if (search) {
       const searchLower = search.toLowerCase();
       const matchesTitle = decision.title.toLowerCase().includes(searchLower);
-      const matchesContext = decision.context
-        ?.toLowerCase()
-        .includes(searchLower);
+      const matchesContext = decision.context?.toLowerCase().includes(searchLower);
       if (!matchesTitle && !matchesContext) return false;
     }
 
-    // Status filter
     if (statusFilter !== 'all' && decision.status !== statusFilter) {
       return false;
     }
 
-    // Tag filter
     if (tagFilter && !decision.tags.includes(tagFilter)) {
       return false;
     }
 
-    // Review due filter
     if (reviewDueFilter !== 'all' && decision.reviewDate) {
       const days = parseInt(reviewDueFilter);
       const today = new Date();
@@ -138,7 +129,7 @@ export default function HomePage() {
   if (loading) {
     return (
       <div className="flex items-center justify-center h-64">
-        <div className="text-slate-400 text-sm">Loading decisions...</div>
+        <div className="text-muted-foreground text-sm">Loading decisions...</div>
       </div>
     );
   }
@@ -149,20 +140,22 @@ export default function HomePage() {
 
       <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 mb-6">
         <div>
-          <h2 className="text-xl font-semibold text-slate-900 tracking-tight">Decisions</h2>
-          <p className="text-sm text-slate-500 mt-0.5">{filteredDecisions.length} total</p>
+          <h2 className="text-lg font-semibold tracking-tight">Decisions</h2>
+          <p className="text-sm text-muted-foreground mt-0.5">
+            {filteredDecisions.length} total
+          </p>
         </div>
         <div className="flex gap-2">
-          <Button variant="secondary" onClick={handleExportCSV}>
+          <Button variant="outline" size="sm" onClick={handleExportCSV}>
             Export CSV
           </Button>
           <Link href="/decisions/new">
-            <Button>New Decision</Button>
+            <Button size="sm">New Decision</Button>
           </Link>
         </div>
       </div>
 
-      <div className="space-y-4 mb-6">
+      <div className="space-y-3 mb-6">
         <SearchBar
           value={search}
           onChange={setSearch}
@@ -180,10 +173,10 @@ export default function HomePage() {
       </div>
 
       {filteredDecisions.length === 0 ? (
-        <div className="bg-white rounded-xl border border-slate-200 shadow-sm p-12 text-center">
-          <div className="w-12 h-12 bg-slate-100 rounded-xl flex items-center justify-center mx-auto mb-4">
+        <div className="rounded-lg border bg-card p-12 text-center">
+          <div className="flex h-12 w-12 items-center justify-center rounded-lg bg-muted mx-auto mb-4">
             <svg
-              className="h-6 w-6 text-slate-400"
+              className="h-6 w-6 text-muted-foreground"
               fill="none"
               stroke="currentColor"
               viewBox="0 0 24 24"
@@ -196,17 +189,17 @@ export default function HomePage() {
               />
             </svg>
           </div>
-          <h3 className="text-base font-semibold text-slate-900 mb-1">
+          <h3 className="text-sm font-medium text-foreground mb-1">
             {decisions.length === 0 ? 'No decisions yet' : 'No results found'}
           </h3>
-          <p className="text-sm text-slate-500 mb-5">
+          <p className="text-sm text-muted-foreground mb-5">
             {decisions.length === 0
               ? 'Start tracking your decisions to see them here.'
               : 'Try adjusting your filters or search terms.'}
           </p>
           {decisions.length === 0 && (
             <Link href="/decisions/new">
-              <Button>Create Your First Decision</Button>
+              <Button size="sm">Create Your First Decision</Button>
             </Link>
           )}
         </div>

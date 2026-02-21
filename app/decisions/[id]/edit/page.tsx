@@ -28,11 +28,11 @@ export default async function EditDecisionPage({
   return (
     <div>
       <div className="mb-6">
-        <h2 className="text-2xl font-bold text-gray-900">Edit Decision</h2>
-        <p className="text-gray-600 mt-1">Update the details of your decision.</p>
+        <h2 className="text-lg font-semibold tracking-tight">Edit Decision</h2>
+        <p className="text-sm text-muted-foreground mt-1">Update the details of your decision.</p>
       </div>
 
-      <div className="bg-white rounded-lg border border-gray-200 p-6">
+      <div className="rounded-lg border bg-card p-6">
         <DecisionForm
           initialData={{
             id: decision.id,

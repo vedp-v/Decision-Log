@@ -70,13 +70,13 @@ export function OutcomeSection({
 
   if (!isEditing && !hasOutcomeData) {
     return (
-      <div className="bg-slate-50 rounded-lg p-6 text-center">
-        <div className="w-10 h-10 bg-slate-100 rounded-xl flex items-center justify-center mx-auto mb-3">
-          <svg className="w-5 h-5 text-slate-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+      <div className="rounded-md bg-muted p-6 text-center">
+        <div className="flex h-10 w-10 items-center justify-center rounded-lg bg-background mx-auto mb-3">
+          <svg className="w-5 h-5 text-muted-foreground" fill="none" stroke="currentColor" viewBox="0 0 24 24">
             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
           </svg>
         </div>
-        <p className="text-sm text-slate-600 mb-3">No outcome recorded yet</p>
+        <p className="text-sm text-muted-foreground mb-3">No outcome recorded yet</p>
         <Button size="sm" onClick={() => setIsEditing(true)}>
           Add Outcome
         </Button>
@@ -88,14 +88,14 @@ export function OutcomeSection({
     return (
       <div className="space-y-4">
         <div className="flex items-center justify-between">
-          <h4 className="text-base font-semibold text-slate-900">Outcome</h4>
+          <h4 className="text-sm font-semibold">Outcome</h4>
           <Button size="sm" variant="ghost" onClick={() => setIsEditing(true)}>
             Edit
           </Button>
         </div>
 
         <div className="flex items-center gap-2">
-          <span className="text-xs font-semibold text-slate-500 uppercase tracking-wide">Status</span>
+          <span className="text-xs font-medium text-muted-foreground uppercase tracking-wider">Status</span>
           <span className={`badge ${outcomeStatusStyles[initialData.outcomeStatus]}`}>
             {initialData.outcomeStatus}
           </span>
@@ -103,10 +103,10 @@ export function OutcomeSection({
 
         {initialData.actualImpact && (
           <div>
-            <h5 className="text-xs font-semibold text-slate-500 uppercase tracking-wide mb-1.5">
+            <h5 className="text-xs font-medium text-muted-foreground uppercase tracking-wider mb-1.5">
               Actual Impact
             </h5>
-            <p className="text-slate-700 text-sm whitespace-pre-wrap leading-relaxed">
+            <p className="text-sm whitespace-pre-wrap leading-relaxed">
               {initialData.actualImpact}
             </p>
           </div>
@@ -114,8 +114,8 @@ export function OutcomeSection({
 
         {initialData.learnings && (
           <div>
-            <h5 className="text-xs font-semibold text-slate-500 uppercase tracking-wide mb-1.5">Learnings</h5>
-            <p className="text-slate-700 text-sm whitespace-pre-wrap leading-relaxed">
+            <h5 className="text-xs font-medium text-muted-foreground uppercase tracking-wider mb-1.5">Learnings</h5>
+            <p className="text-sm whitespace-pre-wrap leading-relaxed">
               {initialData.learnings}
             </p>
           </div>
@@ -123,19 +123,19 @@ export function OutcomeSection({
 
         {initialData.whatIdDoDifferently && (
           <div>
-            <h5 className="text-xs font-semibold text-slate-500 uppercase tracking-wide mb-1.5">
+            <h5 className="text-xs font-medium text-muted-foreground uppercase tracking-wider mb-1.5">
               What I would do differently
             </h5>
-            <p className="text-slate-700 text-sm whitespace-pre-wrap leading-relaxed">
+            <p className="text-sm whitespace-pre-wrap leading-relaxed">
               {initialData.whatIdDoDifferently}
             </p>
           </div>
         )}
 
         {initialData.reviewedOn && (
-          <div className="pt-2 border-t border-slate-100">
-            <span className="text-xs font-semibold text-slate-500 uppercase tracking-wide">Reviewed on </span>
-            <span className="text-sm text-slate-700 font-medium" suppressHydrationWarning>
+          <div className="pt-4 border-t">
+            <span className="text-xs font-medium text-muted-foreground uppercase tracking-wider">Reviewed on </span>
+            <span className="text-sm font-medium" suppressHydrationWarning>
               {new Date(initialData.reviewedOn).toLocaleDateString()}
             </span>
           </div>
@@ -146,7 +146,7 @@ export function OutcomeSection({
 
   return (
     <div className="space-y-4">
-      <h4 className="text-base font-semibold text-slate-900">Edit Outcome</h4>
+      <h4 className="text-sm font-semibold">Edit Outcome</h4>
 
       <Select
         label="Outcome Status"
@@ -196,7 +196,7 @@ export function OutcomeSection({
       />
 
       <div>
-        <label className="block text-sm font-medium text-slate-700 mb-1.5">
+        <label className="block text-sm font-medium text-foreground mb-1.5">
           Reviewed On
         </label>
         <input
@@ -205,15 +205,15 @@ export function OutcomeSection({
           onChange={(e) =>
             setFormData({ ...formData, reviewedOn: e.target.value })
           }
-          className="w-full px-3 py-2 bg-white border border-slate-300 rounded-lg text-slate-900 transition-colors hover:border-slate-400 focus:outline-none focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500"
+          className="flex h-9 w-full rounded-md border border-input bg-transparent px-3 py-1 text-sm shadow-sm transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring"
         />
       </div>
 
       <div className="flex gap-2 pt-2">
-        <Button onClick={handleSubmit} disabled={loading}>
+        <Button size="sm" onClick={handleSubmit} disabled={loading}>
           {loading ? 'Saving...' : 'Save'}
         </Button>
-        <Button variant="secondary" onClick={() => setIsEditing(false)}>
+        <Button size="sm" variant="outline" onClick={() => setIsEditing(false)}>
           Cancel
         </Button>
       </div>

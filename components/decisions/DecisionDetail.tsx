@@ -47,26 +47,26 @@ export function DecisionDetail({ decision }: DecisionDetailProps) {
         <div>
           <Link
             href="/"
-            className="text-sm text-slate-500 hover:text-slate-700 mb-3 inline-flex items-center gap-1 transition-colors"
+            className="text-sm text-muted-foreground hover:text-foreground mb-3 inline-flex items-center gap-1 transition-colors"
           >
             <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
             </svg>
             Back to decisions
           </Link>
-          <h2 className="text-2xl font-semibold text-slate-900 tracking-tight">{decision.title}</h2>
+          <h2 className="text-lg font-semibold tracking-tight">{decision.title}</h2>
           <div className="flex items-center gap-3 mt-2">
             <span className={`badge ${statusStyles[decision.status]}`}>
               {decision.status}
             </span>
-            <span className="text-sm text-slate-500">{formatDate(decision.date)}</span>
+            <span className="text-sm text-muted-foreground">{formatDate(decision.date)}</span>
           </div>
         </div>
         <div className="flex gap-2">
           <Link href={`/decisions/${decision.id}/edit`}>
-            <Button variant="secondary">Edit</Button>
+            <Button variant="outline" size="sm">Edit</Button>
           </Link>
-          <Button variant="danger" onClick={() => setShowDeleteDialog(true)}>
+          <Button variant="destructive" size="sm" onClick={() => setShowDeleteDialog(true)}>
             Delete
           </Button>
         </div>
@@ -74,16 +74,15 @@ export function DecisionDetail({ decision }: DecisionDetailProps) {
 
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
         <div className="lg:col-span-2 space-y-6">
-          {/* Main Details */}
-          <div className="bg-white rounded-xl border border-slate-200 shadow-sm p-6 space-y-5">
-            <h3 className="text-base font-semibold text-slate-900">Details</h3>
+          <div className="rounded-lg border bg-card p-6 space-y-5">
+            <h3 className="text-sm font-semibold">Details</h3>
 
             {decision.context && (
               <div>
-                <h4 className="text-xs font-semibold text-slate-500 uppercase tracking-wide mb-1.5">
+                <h4 className="text-xs font-medium text-muted-foreground uppercase tracking-wider mb-1.5">
                   Context
                 </h4>
-                <p className="text-slate-700 text-sm whitespace-pre-wrap leading-relaxed">
+                <p className="text-sm whitespace-pre-wrap leading-relaxed">
                   {decision.context}
                 </p>
               </div>
@@ -91,14 +90,12 @@ export function DecisionDetail({ decision }: DecisionDetailProps) {
 
             {decision.optionsConsidered && (
               <div>
-                <h4 className="text-xs font-semibold text-slate-500 uppercase tracking-wide mb-1.5">
+                <h4 className="text-xs font-medium text-muted-foreground uppercase tracking-wider mb-1.5">
                   Options Considered
                 </h4>
-                <div className="text-slate-700 text-sm whitespace-pre-wrap leading-relaxed">
+                <div className="text-sm whitespace-pre-wrap leading-relaxed">
                   {decision.optionsConsidered.split('\n').map((line, i) => (
-                    <div key={i} className="mb-1">
-                      {line}
-                    </div>
+                    <div key={i} className="mb-1">{line}</div>
                   ))}
                 </div>
               </div>
@@ -106,10 +103,10 @@ export function DecisionDetail({ decision }: DecisionDetailProps) {
 
             {decision.decision && (
               <div>
-                <h4 className="text-xs font-semibold text-slate-500 uppercase tracking-wide mb-1.5">
+                <h4 className="text-xs font-medium text-muted-foreground uppercase tracking-wider mb-1.5">
                   Decision
                 </h4>
-                <p className="text-slate-700 text-sm whitespace-pre-wrap leading-relaxed">
+                <p className="text-sm whitespace-pre-wrap leading-relaxed">
                   {decision.decision}
                 </p>
               </div>
@@ -117,36 +114,36 @@ export function DecisionDetail({ decision }: DecisionDetailProps) {
 
             {decision.expectedImpact && (
               <div>
-                <h4 className="text-xs font-semibold text-slate-500 uppercase tracking-wide mb-1.5">
+                <h4 className="text-xs font-medium text-muted-foreground uppercase tracking-wider mb-1.5">
                   Expected Impact
                 </h4>
-                <p className="text-slate-700 text-sm whitespace-pre-wrap leading-relaxed">
+                <p className="text-sm whitespace-pre-wrap leading-relaxed">
                   {decision.expectedImpact}
                 </p>
               </div>
             )}
 
-            <div className="grid grid-cols-2 sm:grid-cols-4 gap-4 pt-2 border-t border-slate-100">
+            <div className="grid grid-cols-2 sm:grid-cols-4 gap-4 pt-4 border-t">
               <div>
-                <h4 className="text-xs font-semibold text-slate-500 uppercase tracking-wide mb-1">
+                <h4 className="text-xs font-medium text-muted-foreground uppercase tracking-wider mb-1">
                   Confidence
                 </h4>
-                <p className="text-slate-900 text-sm font-medium">{decision.confidence}%</p>
+                <p className="text-sm font-medium tabular-nums">{decision.confidence}%</p>
               </div>
               <div>
-                <h4 className="text-xs font-semibold text-slate-500 uppercase tracking-wide mb-1">
+                <h4 className="text-xs font-medium text-muted-foreground uppercase tracking-wider mb-1">
                   Reversible
                 </h4>
-                <p className="text-slate-900 text-sm font-medium">
+                <p className="text-sm font-medium">
                   {decision.reversible ? 'Yes' : 'No'}
                 </p>
               </div>
               {decision.reviewDate && (
                 <div>
-                  <h4 className="text-xs font-semibold text-slate-500 uppercase tracking-wide mb-1">
+                  <h4 className="text-xs font-medium text-muted-foreground uppercase tracking-wider mb-1">
                     Review Date
                   </h4>
-                  <p className="text-slate-900 text-sm font-medium">
+                  <p className="text-sm font-medium">
                     {formatDate(decision.reviewDate)}
                   </p>
                 </div>
@@ -154,8 +151,8 @@ export function DecisionDetail({ decision }: DecisionDetailProps) {
             </div>
 
             {decision.links && decision.links.length > 0 && (
-              <div className="pt-2 border-t border-slate-100">
-                <h4 className="text-xs font-semibold text-slate-500 uppercase tracking-wide mb-2">
+              <div className="pt-4 border-t">
+                <h4 className="text-xs font-medium text-muted-foreground uppercase tracking-wider mb-2">
                   Links
                 </h4>
                 <ul className="space-y-1.5">
@@ -165,10 +162,10 @@ export function DecisionDetail({ decision }: DecisionDetailProps) {
                         href={link.url}
                         target="_blank"
                         rel="noopener noreferrer"
-                        className="text-blue-600 hover:text-blue-700 text-sm inline-flex items-center gap-1 transition-colors"
+                        className="text-sm text-foreground underline underline-offset-4 hover:text-muted-foreground transition-colors inline-flex items-center gap-1"
                       >
                         {link.label || link.url}
-                        <svg className="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <svg className="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                           <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
                         </svg>
                       </a>
@@ -179,13 +176,13 @@ export function DecisionDetail({ decision }: DecisionDetailProps) {
             )}
 
             {decision.tags.length > 0 && (
-              <div className="pt-2 border-t border-slate-100">
-                <h4 className="text-xs font-semibold text-slate-500 uppercase tracking-wide mb-2">Tags</h4>
-                <div className="flex flex-wrap gap-1.5">
+              <div className="pt-4 border-t">
+                <h4 className="text-xs font-medium text-muted-foreground uppercase tracking-wider mb-2">Tags</h4>
+                <div className="flex flex-wrap gap-1">
                   {decision.tags.map((tag) => (
                     <span
                       key={tag}
-                      className="px-2.5 py-1 bg-slate-100 text-slate-700 rounded-lg text-xs font-medium"
+                      className="inline-flex items-center rounded-md bg-muted px-2 py-0.5 text-xs font-medium text-muted-foreground"
                     >
                       {tag}
                     </span>
@@ -195,8 +192,7 @@ export function DecisionDetail({ decision }: DecisionDetailProps) {
             )}
           </div>
 
-          {/* Outcome Section */}
-          <div className="bg-white rounded-xl border border-slate-200 shadow-sm p-6">
+          <div className="rounded-lg border bg-card p-6">
             <OutcomeSection
               decisionId={decision.id}
               initialData={{
@@ -210,9 +206,8 @@ export function DecisionDetail({ decision }: DecisionDetailProps) {
           </div>
         </div>
 
-        {/* Notes Timeline */}
         <div className="lg:col-span-1">
-          <div className="bg-white rounded-xl border border-slate-200 shadow-sm p-6 sticky top-20">
+          <div className="rounded-lg border bg-card p-6 sticky top-20">
             <NotesTimeline decisionId={decision.id} notes={decision.notes} />
           </div>
         </div>

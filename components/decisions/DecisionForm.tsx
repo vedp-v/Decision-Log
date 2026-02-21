@@ -168,8 +168,8 @@ export function DecisionForm({ initialData, isEdit = false }: DecisionFormProps)
       />
 
       <div>
-        <label className="block text-sm font-medium text-gray-700 mb-2">
-          Confidence: {formData.confidence}%
+        <label className="block text-sm font-medium text-foreground mb-2">
+          Confidence: <span className="tabular-nums">{formData.confidence}%</span>
         </label>
         <input
           type="range"
@@ -179,27 +179,27 @@ export function DecisionForm({ initialData, isEdit = false }: DecisionFormProps)
           onChange={(e) =>
             setFormData({ ...formData, confidence: parseInt(e.target.value) })
           }
-          className="w-full h-2 bg-gray-200 rounded-lg appearance-none cursor-pointer accent-blue-600"
+          className="w-full h-1.5 bg-muted rounded-full appearance-none cursor-pointer accent-foreground"
         />
-        <div className="flex justify-between text-xs text-gray-500 mt-1">
+        <div className="flex justify-between text-xs text-muted-foreground mt-1">
           <span>Low (0%)</span>
           <span>High (100%)</span>
         </div>
       </div>
 
       <div>
-        <label className="flex items-center gap-2 text-sm font-medium text-gray-700">
+        <label className="flex items-center gap-2 text-sm font-medium text-foreground cursor-pointer">
           <input
             type="checkbox"
             checked={formData.reversible}
             onChange={(e) =>
               setFormData({ ...formData, reversible: e.target.checked })
             }
-            className="w-4 h-4 text-blue-600 border-gray-300 rounded focus:ring-blue-500"
+            className="h-4 w-4 rounded border-input text-foreground focus:ring-ring"
           />
           Reversible
         </label>
-        <p className="text-xs text-gray-500 mt-1 ml-6">
+        <p className="text-xs text-muted-foreground mt-1 ml-6">
           Can this decision be changed later?
         </p>
       </div>
@@ -221,7 +221,7 @@ export function DecisionForm({ initialData, isEdit = false }: DecisionFormProps)
       />
 
       <div>
-        <label className="block text-sm font-medium text-gray-700 mb-2">
+        <label className="block text-sm font-medium text-foreground mb-2">
           Links
         </label>
         {formData.links && formData.links.length > 0 && (
@@ -246,7 +246,7 @@ export function DecisionForm({ initialData, isEdit = false }: DecisionFormProps)
                 />
                 <Button
                   type="button"
-                  variant="danger"
+                  variant="destructive"
                   size="sm"
                   onClick={() => handleRemoveLink(index)}
                 >
@@ -256,7 +256,7 @@ export function DecisionForm({ initialData, isEdit = false }: DecisionFormProps)
             ))}
           </div>
         )}
-        <Button type="button" variant="secondary" size="sm" onClick={handleAddLink}>
+        <Button type="button" variant="outline" size="sm" onClick={handleAddLink}>
           Add Link
         </Button>
       </div>

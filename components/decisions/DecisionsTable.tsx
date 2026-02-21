@@ -1,7 +1,7 @@
 import React from 'react';
 import Link from 'next/link';
 import { formatDate } from '@/lib/utils';
-import { DecisionStatus, OutcomeStatus } from '@/types/decision';
+import { DecisionStatus } from '@/types/decision';
 
 interface Decision {
   id: string;
@@ -34,74 +34,74 @@ function StatusBadge({ status }: { status: DecisionStatus }) {
 
 export function DecisionsTable({ decisions }: DecisionsTableProps) {
   return (
-    <div className="hidden md:block overflow-x-auto bg-white rounded-xl border border-slate-200 shadow-sm">
+    <div className="hidden md:block rounded-lg border bg-card">
       <table className="w-full">
         <thead>
-          <tr className="border-b border-slate-100">
-            <th className="px-5 py-3 text-left text-xs font-semibold text-slate-500 uppercase tracking-wide">
+          <tr className="border-b">
+            <th className="h-10 px-4 text-left text-xs font-medium text-muted-foreground">
               Title
             </th>
-            <th className="px-5 py-3 text-left text-xs font-semibold text-slate-500 uppercase tracking-wide">
+            <th className="h-10 px-4 text-left text-xs font-medium text-muted-foreground">
               Status
             </th>
-            <th className="px-5 py-3 text-left text-xs font-semibold text-slate-500 uppercase tracking-wide">
+            <th className="h-10 px-4 text-left text-xs font-medium text-muted-foreground">
               Date
             </th>
-            <th className="px-5 py-3 text-left text-xs font-semibold text-slate-500 uppercase tracking-wide">
+            <th className="h-10 px-4 text-left text-xs font-medium text-muted-foreground">
               Confidence
             </th>
-            <th className="px-5 py-3 text-left text-xs font-semibold text-slate-500 uppercase tracking-wide">
+            <th className="h-10 px-4 text-left text-xs font-medium text-muted-foreground">
               Reversible
             </th>
-            <th className="px-5 py-3 text-left text-xs font-semibold text-slate-500 uppercase tracking-wide">
+            <th className="h-10 px-4 text-left text-xs font-medium text-muted-foreground">
               Review
             </th>
-            <th className="px-5 py-3 text-left text-xs font-semibold text-slate-500 uppercase tracking-wide">
+            <th className="h-10 px-4 text-left text-xs font-medium text-muted-foreground">
               Tags
             </th>
           </tr>
         </thead>
-        <tbody className="divide-y divide-slate-100">
+        <tbody>
           {decisions.map((decision) => (
             <tr
               key={decision.id}
-              className="hover:bg-slate-50/50 transition-colors"
+              className="border-b last:border-0 transition-colors hover:bg-muted/50"
             >
-              <td className="px-5 py-3.5">
+              <td className="px-4 py-3">
                 <Link
                   href={`/decisions/${decision.id}`}
-                  className="text-slate-900 font-medium hover:text-blue-600 transition-colors"
+                  className="text-sm font-medium text-foreground hover:underline underline-offset-4"
                 >
                   {decision.title}
                 </Link>
               </td>
-              <td className="px-5 py-3.5">
+              <td className="px-4 py-3">
                 <StatusBadge status={decision.status} />
               </td>
-              <td className="px-5 py-3.5 text-sm text-slate-600">
+              <td className="px-4 py-3 text-sm text-muted-foreground">
                 {formatDate(decision.date)}
               </td>
-              <td className="px-5 py-3.5">
-                <span className="text-sm font-medium text-slate-700">{decision.confidence}%</span>
+              <td className="px-4 py-3">
+                <span className="text-sm font-medium tabular-nums">{decision.confidence}%</span>
               </td>
-              <td className="px-5 py-3.5 text-sm text-slate-600">
+              <td className="px-4 py-3 text-sm text-muted-foreground">
                 {decision.reversible ? 'Yes' : 'No'}
               </td>
-              <td className="px-5 py-3.5 text-sm text-slate-500">
+              <td className="px-4 py-3 text-sm text-muted-foreground">
                 {decision.reviewDate ? formatDate(decision.reviewDate) : '—'}
               </td>
-              <td className="px-5 py-3.5">
-                <div className="flex flex-wrap gap-1.5">
+              <td className="px-4 py-3">
+                <div className="flex flex-wrap gap-1">
                   {decision.tags.slice(0, 2).map((tag) => (
                     <span
                       key={tag}
-                      className="px-2 py-0.5 bg-slate-100 text-slate-600 rounded-md text-xs font-medium"
+                      className="inline-flex items-center rounded-md bg-muted px-1.5 py-0.5 text-xs font-medium text-muted-foreground"
                     >
                       {tag}
                     </span>
                   ))}
                   {decision.tags.length > 2 && (
-                    <span className="px-2 py-0.5 bg-slate-100 text-slate-500 rounded-md text-xs font-medium">
+                    <span className="inline-flex items-center rounded-md bg-muted px-1.5 py-0.5 text-xs font-medium text-muted-foreground">
                       +{decision.tags.length - 2}
                     </span>
                   )}
