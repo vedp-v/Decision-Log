@@ -3,8 +3,35 @@ import { Button } from '@/components/ui/Button';
 
 export function LoginPage() {
   return (
-    <div className="flex min-h-[calc(100vh-1px)] items-center justify-center p-4">
-      <div className="flex w-full max-w-sm flex-col items-center gap-6">
+    <div className="relative flex min-h-[calc(100vh-1px)] items-center justify-center p-4 overflow-hidden">
+      {/* Gradient mesh blobs */}
+      <div
+        className="absolute -top-32 -left-32 h-[600px] w-[600px] rounded-full blur-[80px]"
+        style={{
+          background: 'radial-gradient(circle, hsl(230 70% 65%) 0%, transparent 70%)',
+          opacity: 0.35,
+          animation: 'blob-1 18s ease-in-out infinite',
+        }}
+      />
+      <div
+        className="absolute -bottom-40 -right-20 h-[550px] w-[550px] rounded-full blur-[80px]"
+        style={{
+          background: 'radial-gradient(circle, hsl(280 60% 60%) 0%, transparent 70%)',
+          opacity: 0.3,
+          animation: 'blob-2 22s ease-in-out infinite',
+        }}
+      />
+      <div
+        className="absolute top-20 -right-40 h-[500px] w-[500px] rounded-full blur-[80px]"
+        style={{
+          background: 'radial-gradient(circle, hsl(190 70% 55%) 0%, transparent 70%)',
+          opacity: 0.25,
+          animation: 'blob-3 20s ease-in-out infinite',
+        }}
+      />
+
+      {/* Login card */}
+      <div className="relative z-10 flex w-full max-w-sm flex-col items-center gap-6 rounded-xl border bg-background/80 backdrop-blur-sm p-8">
         <div className="flex flex-col items-center gap-3">
           <div className="flex h-12 w-12 items-center justify-center rounded-xl bg-foreground">
             <svg
